@@ -183,38 +183,20 @@ const Navbar: React.FC<NavbarProps> = ({
             <div className="flex items-center">
               <Link href={baseUrl ? baseUrl : "/"} className="flex items-center">
                 <div className="relative">
-                  <img src={imageUrl} alt="LiteLLM Brand" className="h-10 w-auto" />
-                  <span
-                    className="absolute -top-1 -right-2 text-lg animate-bounce"
-                    style={{ animationDuration: "2s" }}
-                    title="Happy Holidays!"
-                  >
-                    🎄
-                  </span>
+                  <img src={imageUrl} alt="SecureAIGateway" className="h-10 w-auto" />
                 </div>
               </Link>
               {version && (
-                <a
-                  href="https://docs.litellm.ai/release_notes"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs text-gray-500 border border-gray-200 rounded-lg px-2 py-0.5 bg-gray-50 font-medium -ml-2 hover:bg-gray-100 transition-colors cursor-pointer z-10"
+                <span
+                  className="text-xs text-gray-500 border border-gray-200 rounded-lg px-2 py-0.5 bg-gray-50 font-medium ml-2"
                 >
                   v{version}
-                </a>
+                </span>
               )}
             </div>
           </div>
           {/* Right side nav items */}
           <div className="flex items-center space-x-5 ml-auto">
-            <a
-              href="https://docs.litellm.ai/docs/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              Docs
-            </a>
 
             {!isPublicPage && (
               <Dropdown

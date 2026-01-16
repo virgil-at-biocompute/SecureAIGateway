@@ -154,7 +154,7 @@ const VectorStoreForm: React.FC<VectorStoreFormProps> = ({
             message="PG Vector Setup Required"
             description={
               <div>
-                <p>LiteLLM provides a server to connect to PG Vector. To use this provider:</p>
+                <p>SecureAIGateway provides a server to connect to PG Vector. To use this provider:</p>
                 <ol style={{ marginLeft: "16px", marginTop: "8px" }}>
                   <li>
                     Deploy the litellm-pgvector server from:{" "}
@@ -287,7 +287,7 @@ const VectorStoreForm: React.FC<VectorStoreFormProps> = ({
           label={
             <span>
               Vector Store Name{" "}
-              <Tooltip title="Custom name you want to give to the vector store, this name will be rendered on the LiteLLM UI">
+              <Tooltip title="Custom name you want to give to the vector store, this name will be rendered in the UI">
                 <InfoCircleOutlined style={{ marginLeft: "4px" }} />
               </Tooltip>
             </span>

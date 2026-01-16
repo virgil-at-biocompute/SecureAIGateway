@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0",
+  "description": "SecureAIGateway Menu Configuration - Set enabled: false to hide menu items",
+  "menu": {
+    "ai_gateway": {
+      "enabled": true,
+      "label": "AI GATEWAY",
+      "items": {
+        "api-keys": { "enabled": true, "label": "Virtual Keys" },
+        "llm-playground": { "enabled": true, "label": "Playground" },
+        "models": { "enabled": true, "label": "Models + Endpoints" },
+        "agents": { "enabled": true, "label": "Agents" },
+        "mcp-servers": { "enabled": true, "label": "MCP Servers" },
+        "guardrails": { "enabled": true, "label": "Guardrails" },
+        "tools": {
+          "enabled": true,
+          "label": "Tools",
+          "items": {
+            "search-tools": { "enabled": true, "label": "Search Tools" },
+            "vector-stores": { "enabled": true, "label": "Vector Stores" }
+          }
+        }
+      }
+    },
+    "observability": {
+      "enabled": true,
+      "label": "OBSERVABILITY",
+      "items": {
+        "new_usage": { "enabled": true, "label": "Usage" },
+        "logs": { "enabled": true, "label": "Logs" }
+      }
+    },
+    "access_control": {
+      "enabled": false,
+      "label": "ACCESS CONTROL",
+      "items": {
+        "users": { "enabled": false, "label": "Internal Users" },
+        "teams": { "enabled": false, "label": "Teams" },
+        "organizations": { "enabled": false, "label": "Organizations" },
+        "budgets": { "enabled": false, "label": "Budgets" }
+      }
+    },
+    "developer_tools": {
+      "enabled": true,
+      "label": "DEVELOPER TOOLS",
+      "items": {
+        "api_ref": { "enabled": true, "label": "API Reference" },
+        "model-hub-table": { "enabled": true, "label": "AI Hub" },
+        "experimental": {
+          "enabled": true,
+          "label": "Experimental",
+          "items": {
+            "caching": { "enabled": true, "label": "Caching" },
+            "prompts": { "enabled": true, "label": "Prompts" },
+            "transform-request": { "enabled": true, "label": "API Playground" },
+            "tag-management": { "enabled": true, "label": "Tag Management" },
+            "4": { "enabled": true, "label": "Old Usage" }
+          }
+        }
+      }
+    },
+    "settings": {
+      "enabled": true,
+      "label": "SETTINGS",
+      "items": {
+        "settings": {
+          "enabled": true,
+          "label": "Settings",
+          "items": {
+            "router-settings": { "enabled": true, "label": "Router Settings" },
+            "logging-and-alerts": { "enabled": true, "label": "Logging & Alerts" },
+            "admin-panel": { "enabled": true, "label": "Admin Settings" },
+            "cost-tracking": { "enabled": true, "label": "Cost Tracking" },
+            "ui-theme": { "enabled": true, "label": "UI Theme" }
+          }
+        }
+      }
+    }
+  }
+}

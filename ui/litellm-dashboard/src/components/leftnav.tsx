@@ -1,6 +1,12 @@
 import { useOrganizations } from "@/app/(dashboard)/hooks/organizations/useOrganizations";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
 import {
+  useMenuConfig,
+  isMenuItemEnabled,
+  isMenuGroupEnabled,
+  type MenuConfig,
+} from "@/app/(dashboard)/hooks/menuConfig/useMenuConfig";
+import {
   ApiOutlined,
   AppstoreOutlined,
   BankOutlined,
@@ -52,6 +58,7 @@ interface MenuItem {
 // Group configuration
 interface MenuGroup {
   groupLabel: string;
+  configKey: keyof MenuConfig["menu"];
   items: MenuItem[];
   roles?: string[];
 }
@@ -59,6 +66,7 @@ interface MenuGroup {
 const Sidebar: React.FC<SidebarProps> = ({ setPage, defaultSelectedKey, collapsed = false }) => {
   const { userId, accessToken, userRole } = useAuthorized();
   const { data: organizations } = useOrganizations();
+  const { data: menuConfig } = useMenuConfig();
 
   // Check if user is an org_admin
   const isOrgAdmin = useMemo(() => {
@@ -80,6 +88,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setPage, defaultSelectedKey, collapse
   const menuGroups: MenuGroup[] = [
     {
       groupLabel: "AI GATEWAY",
+      configKey: "ai_gateway",
       items: [
         {
           key: "api-keys",
@@ -146,6 +155,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setPage, defaultSelectedKey, collapse
     },
     {
       groupLabel: "OBSERVABILITY",
+      configKey: "observability",
       items: [
         {
           key: "new_usage",
@@ -168,6 +178,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setPage, defaultSelectedKey, collapse
     },
     {
       groupLabel: "ACCESS CONTROL",
+      configKey: "access_control",
       items: [
         {
           key: "users",
@@ -200,6 +211,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setPage, defaultSelectedKey, collapse
     },
     {
       groupLabel: "DEVELOPER TOOLS",
+      configKey: "developer_tools",
       items: [
         {
           key: "api_ref",
@@ -259,6 +271,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setPage, defaultSelectedKey, collapse
     },
     {
       groupLabel: "SETTINGS",
+      configKey: "settings",
       roles: all_admin_roles,
       items: [
         {
@@ -309,10 +322,18 @@ const Sidebar: React.FC<SidebarProps> = ({ setPage, defaultSelectedKey, collapse
     },
   ];
 
-  // Filter items based on user role
-  const filterItemsByRole = (items: MenuItem[]): MenuItem[] => {
+  // Filter items based on user role and menu config
+  const filterItemsByRoleAndConfig = (
+    items: MenuItem[],
+    configKey: keyof MenuConfig["menu"],
+    parentKey?: string
+  ): MenuItem[] => {
     return items
       .filter((item) => {
+        // Check menu config first
+        if (!isMenuItemEnabled(menuConfig, configKey, parentKey || item.key, parentKey ? item.key : undefined)) {
+          return false;
+        }
         // Special handling for organizations menu item - allow org_admins
         if (item.key === "organizations") {
           return !item.roles || item.roles.includes(userRole) || isOrgAdmin;
@@ -321,8 +342,12 @@ const Sidebar: React.FC<SidebarProps> = ({ setPage, defaultSelectedKey, collapse
       })
       .map((item) => ({
         ...item,
-        children: item.children ? filterItemsByRole(item.children) : undefined,
-      }));
+        children: item.children
+          ? filterItemsByRoleAndConfig(item.children, configKey, item.key)
+          : undefined,
+      }))
+      // Filter out items with empty children arrays
+      .filter((item) => !item.children || item.children.length > 0);
   };
 
   // Build menu items with groups
@@ -330,12 +355,16 @@ const Sidebar: React.FC<SidebarProps> = ({ setPage, defaultSelectedKey, collapse
     const items: MenuProps["items"] = [];
 
     menuGroups.forEach((group) => {
+      // Check if group is enabled in config
+      if (!isMenuGroupEnabled(menuConfig, group.configKey)) {
+        return;
+      }
       // Check if group has role restriction
       if (group.roles && !group.roles.includes(userRole)) {
         return;
       }
 
-      const filteredItems = filterItemsByRole(group.items);
+      const filteredItems = filterItemsByRoleAndConfig(group.items, group.configKey);
       if (filteredItems.length === 0) return;
 
       // Add group with items

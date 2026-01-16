@@ -64,7 +64,7 @@ export function SurveyPrompt({ onOpen, onDismiss, isVisible }: SurveyPromptProps
         </div>
 
         <p className="text-sm text-gray-600 mb-3">
-          Help us improve LiteLLM! Share your experience in 5 quick questions.
+          Help us improve SecureAIGateway! Share your experience in 5 quick questions.
         </p>
 
         <Button type="primary" block onClick={onOpen}>

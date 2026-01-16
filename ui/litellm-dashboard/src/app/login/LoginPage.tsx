@@ -72,7 +72,7 @@ function LoginPageContent() {
         <Card className="w-full max-w-lg shadow-md">
           <Space direction="vertical" size="middle" className="w-full">
             <div className="text-center">
-              <Title level={2}>🚅 LiteLLM</Title>
+              <img src="/get_image" alt="SecureAIGateway" className="h-12 mx-auto mb-4" />
             </div>
 
             <Alert
@@ -102,12 +102,12 @@ function LoginPageContent() {
       <Card className="w-full max-w-lg shadow-md">
         <Space direction="vertical" size="middle" className="w-full">
           <div className="text-center">
-            <Title level={2}>🚅 LiteLLM</Title>
+            <img src="/get_image" alt="SecureAIGateway" className="h-12 mx-auto mb-4" />
           </div>
 
           <div className="text-center">
             <Title level={3}>Login</Title>
-            <Text type="secondary">Access your LiteLLM Admin UI.</Text>
+            <Text type="secondary">Access your SecureAIGateway Admin UI.</Text>
           </div>
 
           <Alert
@@ -116,15 +116,8 @@ function LoginPageContent() {
               <>
                 <Paragraph className="text-sm">
                   By default, Username is <code className="bg-gray-100 px-1 py-0.5 rounded text-xs">admin</code> and
-                  Password is your set LiteLLM Proxy
+                  Password is your set
                   <code className="bg-gray-100 px-1 py-0.5 rounded text-xs">MASTER_KEY</code>.
-                </Paragraph>
-                <Paragraph className="text-sm">
-                  Need to set UI credentials or SSO?{" "}
-                  <a href="https://docs.litellm.ai/docs/proxy/ui" target="_blank" rel="noopener noreferrer">
-                    Check the documentation
-                  </a>
-                  .
                 </Paragraph>
               </>
             }

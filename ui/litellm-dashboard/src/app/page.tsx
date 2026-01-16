@@ -27,7 +27,7 @@ import PromptsPanel from "@/components/prompts";
 import PublicModelHub from "@/components/public_model_hub";
 import { SearchTools } from "@/components/search_tools";
 import Settings from "@/components/settings";
-import { SurveyPrompt, SurveyModal } from "@/components/survey";
+// Survey components disabled for white-label builds
 import TagManagement from "@/components/tag_management";
 import TransformRequestPanel from "@/components/transform_request";
 import UIThemeSettings from "@/components/ui_theme_settings";
@@ -120,9 +120,7 @@ export default function CreateKeyPage() {
   const [authLoading, setAuthLoading] = useState(true);
   const [userID, setUserID] = useState<string | null>(null);
 
-  // Survey state - always show by default
-  const [showSurveyPrompt, setShowSurveyPrompt] = useState(true);
-  const [showSurveyModal, setShowSurveyModal] = useState(false);
+  // Survey state - removed for white-label builds
 
   const invitation_id = searchParams.get("invitation_id");
 
@@ -267,34 +265,7 @@ export default function CreateKeyPage() {
     }
   }, [accessToken, userID, userRole]);
 
-  // Auto-dismiss survey prompt after 15 seconds
-  useEffect(() => {
-    if (showSurveyPrompt && !showSurveyModal) {
-      const timer = setTimeout(() => {
-        setShowSurveyPrompt(false);
-      }, 15000);
-      return () => clearTimeout(timer);
-    }
-  }, [showSurveyPrompt, showSurveyModal]);
-
-  const handleOpenSurvey = () => {
-    setShowSurveyPrompt(false);
-    setShowSurveyModal(true);
-  };
-
-  const handleDismissSurveyPrompt = () => {
-    setShowSurveyPrompt(false);
-  };
-
-  const handleSurveyComplete = () => {
-    setShowSurveyModal(false);
-  };
-
-  const handleSurveyModalClose = () => {
-    // If they close the modal without completing, show the prompt again
-    setShowSurveyModal(false);
-    setShowSurveyPrompt(true);
-  };
+  // Survey functionality removed for white-label builds
 
   if (authLoading || redirectToLogin) {
     return <LoadingScreen />;
@@ -492,17 +463,7 @@ export default function CreateKeyPage() {
                 )}
               </div>
 
-              {/* Survey Components */}
-              <SurveyPrompt
-                isVisible={showSurveyPrompt}
-                onOpen={handleOpenSurvey}
-                onDismiss={handleDismissSurveyPrompt}
-              />
-              <SurveyModal
-                isOpen={showSurveyModal}
-                onClose={handleSurveyModalClose}
-                onComplete={handleSurveyComplete}
-              />
+              {/* Survey Components - Disabled for white-label builds */}
             </div>
           )}
         </ThemeProvider>
